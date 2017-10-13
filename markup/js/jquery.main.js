@@ -10,6 +10,11 @@ function initMap() {
         },
         zoom: 12,
         marker: true,
+        contentString:'<div id="my-content">'+
+            '<span class="close-popup"><span></span></span>'+
+    '<h1>THIS IS POP UP</h1>'+
+    '<p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>'+
+    '</div>',
         style: [
             {elementType: 'geometry', stylers: [{color: '#262231'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#262231'}]},
@@ -140,7 +145,16 @@ function initMap() {
                 icon: self.options.markerImg
             });
             var infowindow = new google.maps.InfoWindow({
-                content: false
+                content: self.options.contentString
+            });
+            marker.addListener('click', function() {
+                infowindow.open(self.map, marker);
+                var content = $('#my-content').parent().parent().parent().parent().addClass('content-wrap');
+                content = $('.content-wrap');
+                $(content.children()[0]).css('display','none');
+                $(content.children()[2]).addClass('close-style');
+
+                console.log(content);
             });
         },
 

@@ -119,6 +119,53 @@ a.my-btn {
 	width: 100%;
 	height: calc(100vh - 76px);
 }
+.content-wrap{
+	border: 3px solid $colorLight;
+	border-radius: 10px;
+	background: $colorDark;
+	&:before{
+		content: "";
+		position: absolute;
+		border: 3px solid $colorLight;
+		left: calc(50% - 25px);
+		bottom: -20px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: $colorDark;
+	}
+	&:after{
+		content: "";
+		position: absolute;
+		left: calc(50% - 50px);
+		bottom: 0;
+		width: 100px;
+		height: 50px;
+		background: $colorDark;
+	}
+	.gm-style-iw{
+		top: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		width: 100% !important;
+		&>div:nth-child(1){
+			max-width: 100% !important;
+			width: auto;
+		}
+	}
+	.close-style{
+		background: transparent;
+		img{
+			opacity: 0;
+		}
+	}
+	#my-content{
+		position: relative;
+		z-index: 999;
+		width: 300px;
+		display: inline-block;
+	}
+}
 
 
 

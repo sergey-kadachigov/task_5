@@ -603,12 +603,47 @@ a.my-btn {
       max-width: 100% !important;
       width: auto; }
   .content-wrap .close-style {
-    background: transparent; }
+    z-index: -1 !important; }
     .content-wrap .close-style img {
       opacity: 0; }
   .content-wrap #my-content {
     position: relative;
     z-index: 999;
-    width: 300px;
+    max-width: 300px;
     display: inline-block; }
+  .content-wrap .close-popup {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: 14px;
+    height: 14px;
+    z-index: 99999;
+    cursor: pointer; }
+    .content-wrap .close-popup:hover:before, .content-wrap .close-popup:hover:after {
+      background: #cbc9bf; }
+    .content-wrap .close-popup:before, .content-wrap .close-popup:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: calc(50% - 1px);
+      background: #f5f3e6;
+      height: 2px;
+      width: 100%;
+      border-radius: 2px;
+      -webkit-transition: .3s;
+              transition: .3s; }
+    .content-wrap .close-popup:before {
+      -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+              transform: rotate(45deg); }
+    .content-wrap .close-popup:after {
+      -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+
+#my-content {
+  position: relative;
+  z-index: 999;
+  max-width: 300px;
+  display: inline-block; }
 /*# sourceMappingURL=main.css.map */

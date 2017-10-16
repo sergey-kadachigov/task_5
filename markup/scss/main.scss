@@ -148,13 +148,14 @@ a.my-btn {
 		left: 0 !important;
 		right: 0 !important;
 		width: 100% !important;
+
 		&>div:nth-child(1){
 			max-width: 100% !important;
 			width: auto;
 		}
 	}
 	.close-style{
-		background: transparent;
+		z-index: -1 !important;
 		img{
 			opacity: 0;
 		}
@@ -162,9 +163,48 @@ a.my-btn {
 	#my-content{
 		position: relative;
 		z-index: 999;
-		width: 300px;
+		max-width: 300px;
 		display: inline-block;
 	}
+	.close-popup{
+		position: absolute;
+		right: 7px;
+		top: 7px;
+		width: 14px;
+		height: 14px;
+		z-index: 99999;
+		cursor: pointer;
+
+		&:hover{
+			&:before,&:after{
+				background: #cbc9bf;
+			}
+		}
+
+		&:before,&:after{
+			content: '';
+			position: absolute;
+			left: 0;
+			top:calc(50% - 1px);
+			background: $colorLight;
+			height: 2px;
+			width: 100%;
+			border-radius: 2px;
+			transition: .3s;
+		}
+		&:before{
+			transform: rotate(45deg);
+		}
+		&:after{
+			transform: rotate(-45deg);
+		}
+	}
+}
+#my-content{
+	position: relative;
+	z-index: 999;
+	max-width: 300px;
+	display: inline-block;
 }
 
 

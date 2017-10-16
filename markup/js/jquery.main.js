@@ -10,11 +10,11 @@ function initMap() {
         },
         zoom: 12,
         marker: true,
-        contentString:'<div id="my-content">'+
-            '<span class="close-popup"><span></span></span>'+
-    '<h1>THIS IS POP UP</h1>'+
-    '<p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>'+
-    '</div>',
+        contentString:
+        '<div id="my-content">' +
+        '<h1>THIS IS POP UP</h1>' +
+        '<p>bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>' +
+        '</div>',
         style: [
             {elementType: 'geometry', stylers: [{color: '#262231'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#262231'}]},
@@ -103,30 +103,32 @@ function initMap() {
     function MyMap(options) {
         this.options = $.extend({
             holder: '#map',
+            btnClose: '.close-popup',
+            realBtnClose: 'close-style',
+            markerImg: 'marker.png',
+            event: 'click',
+            parentClass:'content-wrap',
+            contentMarker:'#my-content',
             zoom: 4,
             coordinates: {
                 lat: 49.9908952,
                 lng: 36.22925
             },
-            marker: false,
-            markerImg: 'marker.png'
+            closeContent: '<span class="close-popup"></span>',
+            marker: false
         }, options);
         this.init();
-    };
+    }
     MyMap.prototype = {
         init: function () {
             if (this.options.holder) {
                 this.findElements();
-                this.attachEvents();
                 this.openMap();
             }
         },
         findElements: function () {
             this.holder = $(this.options.holder);
         },
-        attachEvents: function () {
-        },
-
         openMap: function () {
             var self = this;
             this.map = new google.maps.Map(self.holder[0], {
@@ -135,27 +137,36 @@ function initMap() {
                 styles: self.options.style
             });
             this.options.marker ? this.openMarker() : 0;
-
+            this.options.contentString ? this.addInfoWindow(): 0;
         },
         openMarker: function () {
             var self = this;
-            var marker = new google.maps.Marker({
+            this.marker = new google.maps.Marker({
                 position: self.options.coordinates,
                 map: self.map,
                 icon: self.options.markerImg
             });
-            var infowindow = new google.maps.InfoWindow({
-                content: self.options.contentString
+            this.openPopUp();
+        },
+        openPopUp: function () {
+            var self = this;
+            this.marker.addListener(self.options.event, function () {
+                self.infoWindow.open(self.map, self.marker);
+                var content = $(self.options.contentMarker).parent().parent().parent().parent().addClass(self.options.parentClass);
+                $(content.children()[0]).hide();
+                $(content.children()[2]).addClass(self.options.realBtnClose);
+                self.closePopUp();
             });
-            marker.addListener('click', function() {
-                infowindow.open(self.map, marker);
-                var content = $('#my-content').parent().parent().parent().parent().addClass('content-wrap');
-                content = $('.content-wrap');
-                $(content.children()[0]).css('display','none');
-                $(content.children()[2]).addClass('close-style');
-
-                console.log(content);
+        },
+        closePopUp: function () {
+            var self = this;
+            $(this.options.btnClose).on(this.options.event, function () {
+                $('.' + self.options.realBtnClose).trigger(self.options.event);
             });
+        },
+        addInfoWindow:function () {
+            var self = this;
+            this.infoWindow = new google.maps.InfoWindow({content: self.options.closeContent+self.options.contentString});
         },
 
         myCallback: function (name) {
